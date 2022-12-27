@@ -4,8 +4,7 @@ int main() {
     customerList C;
     adr_customer p;
     adr_vehicle v;
-    string name = "John Doe";
-    string id, status;
+    string name, id, status;
     int num;
 
     createListCustomer(C);
@@ -32,17 +31,8 @@ int main() {
     p = CreateElementCustomerData(p, "Alam", "AHH001", "BELUM BERES");
     insertLastCustomer(C,p);
 
-    /*
-    v = CreateElementVehicleData(v,"Toyota","SUV","Land Cruiser","Ded as hell",1998);
-    insertLastVehicle(C,v,"FPS001");
-    v = CreateElementVehicleData(v,"Ford","Truck","F150","Broken asf",1980);
-    insertLastVehicle(C,v,"FPS001");
-    */
-    cout<<"====== DATA ====="<<endl;
+    cout<<"====== CUSTOMER DATA ======"<<endl;
     printData(C);
-    
-    
-    
 
     return 0;
 }

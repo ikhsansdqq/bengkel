@@ -1,21 +1,27 @@
 #include "menu.h"
 
-void createListCustomer(customerList &C){ //Create first list
+void createListCustomer(customerList &C){
     C.first = NULL;
 }
 
-adr_customer CreateElementCustomerData(adr_customer AC,string name,string id,string status){ //Creating element for Customer BOX aka the Data
+adr_customer CreateElementCustomerData(adr_customer AC,string name,string id,string status){
     AC = new customer;
     AC->name = name;
     AC->id = id;
     AC->status = status;
     AC->child = NULL;
     AC->next = NULL;
-    return AC;
+
+    if(id.size() < 10) {
+        return AC;
+    } else {
+        cout << "The customer ID exceeds limit." << endl;
+    }
+    // return AC;
 }
 
 
-void insertLastCustomer(customerList &C, adr_customer AC){ //Inserting last the customer
+void insertLastCustomer(customerList &C, adr_customer AC){
     if (C.first == NULL){
         C.first = AC;
         return;
@@ -38,7 +44,7 @@ adr_vehicle CreateElementVehicleData(adr_vehicle AV,string brand,string car_type
     AV->next = NULL;
     return AV;
 }
-void insertLastVehicle(customerList &C, adr_vehicle AV, string customerId) { //Inserting last in the vehicle list
+void insertLastVehicle(customerList &C, adr_vehicle AV, string customerId) {
     adr_customer p = C.first;
     while(p != NULL && p->id != customerId) {
         p = p->next;
@@ -62,14 +68,17 @@ adr_damage CreateElementDamage(adr_damage AD,string title, string explanation, s
 void insertLastDamage(customerList &C, adr_damage AD);
 */
 
-void printData(customerList C){ //Print the data
+void printData(customerList C){
     adr_customer AC = C.first;
     int customerCount = 1, vehicleCount;
-    while (AC != NULL){ //Printing the Customer
-        cout<<"Customer "<<customerCount<<endl;
-        cout<<"Name : "<<AC->name<<endl;
-        cout<<"ID : "<<AC->id<<endl;
-        cout<<"Status : "<<AC->status<<endl;
+    while (AC != NULL){
+        cout << "Customer         :   "<< customerCount <<endl;
+        cout << "Customer Name    :   "<< AC->name <<endl;
+        cout << "Customer ID      :   "<< AC->id <<endl;
+        cout << "Customer Status  :   "<< AC->status <<endl; // e.g. Status = "Selesai" or Status = "Dalam pengerjaan"
+
+        AC = AC->next;
+        customerCount++;
 
         /*
         adr_vehicle AV = AC->child;
@@ -87,8 +96,5 @@ void printData(customerList C){ //Print the data
             vehicleCount++;
         }
         */
-       //printing vehicle gonna be hold until insertLastVehicle is fixed
-        AC = AC->next;
-        customerCount++;
     }
 }
