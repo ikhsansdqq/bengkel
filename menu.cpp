@@ -11,7 +11,7 @@ adr_customer CreateElementCustomerData(adr_customer AC,string name,string id,str
     AC->status = status;
     AC->child = NULL;
     AC->next = NULL;
-
+    
     return AC;
 }
 
