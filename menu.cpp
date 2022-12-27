@@ -12,12 +12,7 @@ adr_customer CreateElementCustomerData(adr_customer AC,string name,string id,str
     AC->child = NULL;
     AC->next = NULL;
 
-    if(id.size() < 10) {
-        return AC;
-    } else {
-        cout << "The customer ID exceeds limit." << endl;
-    }
-    // return AC;
+    return AC;
 }
 
 
