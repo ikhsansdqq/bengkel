@@ -38,13 +38,13 @@ typedef struct customerList{
 void createListCustomer(customerList &C);
 adr_customer CreateElementCustomerData(adr_customer AC,string name,string id,string status);
 void insertLastCustomer(customerList &C, adr_customer AC);
-
 adr_vehicle CreateElementVehicleData(adr_vehicle AV,string brand,string car_type,string model,string status, int year);
-void insertLastVehicle(customerList &C, adr_vehicle AV);
+void insertLastVehicle(customerList &C, adr_vehicle AV,string customerID);
 
 /*adr_damage CreateElementDamage(adr_damage AD,string title, string explanation, string status);
 void insertLastDamage(customerList &C, adr_damage AD);
 */
+
 void printData(customerList C);
 
 
