@@ -1,13 +1,14 @@
 #include "menu.h"
 
 int main() {
-    customerList C;
-    adr_customer p;
-    adr_vehicle v;
+    customerList customerList;
+    vehicleList vehicleList;
+    adr_customer addressCustomer;
+    adr_vehicle addressVehicle;
     string name, id, status;
     int num;
 
-    createListCustomer(C);
+    createListCustomer(customerList);
 
     /*cout << "Please input how many customers: ";
     cin >> num;
@@ -21,18 +22,22 @@ int main() {
         cout << "Status:";
         cin >> status;
 
-        p = CreateElementCustomerData(p, name, id, status);
-        insertLastCustomer(C, p);
+        addressCustomer = CreateElementCustomerData(addressCustomer, name, id, status);
+        insertLastCustomer(customerList, addressCustomer);
     }
     */
 
-    p = CreateElementCustomerData(p, "Fauzan", "FPS001", "BERES");
-    insertLastCustomer(C,p);
-    p = CreateElementCustomerData(p, "Alam", "AHH001", "BELUM BERES");
-    insertLastCustomer(C,p);
+    addressCustomer = CreateElementCustomerData(addressCustomer, "Fauzan", "FPS001", "BERES");
+    insertLastCustomer(customerList,addressCustomer);
+    addressCustomer = CreateElementCustomerData(addressCustomer, "Alam", "AHH001", "BELUM BERES");
+    insertLastCustomer(customerList,addressCustomer);
+    addressVehicle = CreateElementVehicleData(addressVehicle,"Toyota","SUV","Land Cruiser","Ded as hell",1998);
+    insertLastVehicle(customerList,vehicleList,"FPS001",addressVehicle);
+    addressVehicle = CreateElementVehicleData(addressVehicle,"Ford","Truck","F150","Broken asf",1980);
+    insertLastVehicle(customerList,vehicleList,"FPS001",addressVehicle);
 
-    cout<<"====== CUSTOMER DATA ======"<<endl;
-    printData(C);
+
+    printData(customerList);
 
     return 0;
 }
