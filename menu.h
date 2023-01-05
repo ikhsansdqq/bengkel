@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+const string DONE = "DONE";
+
 typedef struct damage *adr_damage;
 typedef struct vehicle *adr_vehicle;
 typedef struct customer *adr_customer;
@@ -13,7 +15,7 @@ typedef struct damage{
 };
 
 typedef struct vehicle{
-    string brand,car_type,model, status;
+    string brand,car_type,model, status, vehicle_id;
     int year;
     adr_damage damage;
     adr_vehicle next;
@@ -21,21 +23,12 @@ typedef struct vehicle{
 
 typedef struct customer{
     string name,customer_id,status;
-    adr_vehicle child;
+    adr_vehicle vehicle;
     adr_customer next;
 };
 
 typedef struct customerList{
     adr_customer first;
-};
-
-typedef struct vehicleList{
-    adr_vehicle first;
-};
-
-typedef struct conditionChecking {
-    adr_customer customerStatusCondition;
-    adr_vehicle vehicleStatusCondition;
 };
 
 void createListCustomer(customerList &customerList);
@@ -48,4 +41,5 @@ adr_customer findCustomerAddress(customerList customerList,string customer_id);
 void insertLastDamage(customerList &customerList, adr_damage AD);
 */
 void printData(customerList customerList);
+adr_vehicle findVehicleAddress(vehicleList vehicleList, string vehicle_id);
 #endif //MENU_H_INCLUDED
