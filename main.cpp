@@ -1,12 +1,10 @@
 #include "menu.h"
 
 int main() {
-    customerList customerList;
-    vehicleList vehicleList;
-    adr_customer addressCustomer;
-    adr_vehicle addressVehicle;
-    string name, id, status;
-    int num;
+    customerList customerList{};
+    vehicleList vehicleList{};
+    adr_customer addressCustomer = nullptr;
+    adr_vehicle addressVehicle = nullptr;
 
     createListCustomer(customerList);
 
@@ -27,17 +25,16 @@ int main() {
     }
     */
 
-    addressCustomer = CreateElementCustomerData(addressCustomer, "Fauzan", "FPS001", "BERES");
+    addressCustomer = CreateElementCustomerData(addressCustomer, "Fauzan", "FRM001", "Done");
     insertLastCustomer(customerList,addressCustomer);
-    addressCustomer = CreateElementCustomerData(addressCustomer, "Alam", "AHH001", "BELUM BERES");
+    addressCustomer = CreateElementCustomerData(addressCustomer, "Alam", "ARP001", "In Progress");
     insertLastCustomer(customerList,addressCustomer);
-    addressVehicle = CreateElementVehicleData(addressVehicle,"Toyota","SUV","Land Cruiser","Ded as hell",1998);
-    insertLastVehicle(customerList,vehicleList,"FPS001",addressVehicle);
-    addressVehicle = CreateElementVehicleData(addressVehicle,"Ford","Truck","F150","Broken asf",1980);
-    insertLastVehicle(customerList,vehicleList,"FPS001",addressVehicle);
 
+    addressVehicle = CreateElementVehicleData(addressVehicle,"Toyota","SUV","Land Cruiser","Inspection",1998);
+    insertLastVehicle(customerList,vehicleList,"FRM001",addressVehicle);
+    addressVehicle = CreateElementVehicleData(addressVehicle,"Ford","Truck","F150","DONE",1980);
+    insertLastVehicle(customerList,vehicleList,"ARP001",addressVehicle);
 
     printData(customerList);
-
     return 0;
 }

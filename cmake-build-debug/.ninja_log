@@ -1,0 +1,5 @@
+# ninja log v5
+1	110	6946357882491591	build.ninja	fc4c8b33fc93780e
+1	336	6946357886338472	CMakeFiles/ProjectBengkelV2.dir/main.cpp.obj	112275b0a244f92c
+3	339	6946357886378481	CMakeFiles/ProjectBengkelV2.dir/menu.cpp.obj	a094b6bb7efda00b
+339	411	6946357887072231	ProjectBengkelV2.exe	b86f55b901b8bf36
