@@ -3,7 +3,6 @@
 #include <iostream>
 using namespace std;
 
-const string DONE = "DONE";
 
 typedef struct damage *adr_damage;
 typedef struct vehicle *adr_vehicle;
@@ -32,14 +31,18 @@ typedef struct customerList{
 };
 
 void createListCustomer(customerList &customerList);
-adr_customer CreateElementCustomerData(adr_customer addressCustomer,string name,string customer_id,string status);
+adr_customer CreateElementCustomerData(adr_customer addressCustomer,string name,string customer_id);
 void insertLastCustomer(customerList &customerList, adr_customer addressCustomer);
-adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle,string brand,string car_type,string model,string status, int year);
-void insertLastVehicle(customerList &customerList, vehicleList &vehicleList,string customer_id,adr_vehicle addressVehicle);
+adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle,string vehicle_id, string brand,string car_type,string model,string status, int year);
+void insertLastVehicle(customerList &customerList,string customer_id,adr_vehicle addressVehicle);
 adr_customer findCustomerAddress(customerList customerList,string customer_id);
+void printData(customerList customerList);
+adr_vehicle findVehicleAddress(adr_customer addressCustomer, string vehicle_id);
+bool checkAllVehicleStatus(adr_customer customer);
+void updateCustomerStatus(adr_customer &customer);
+void updateAllCustomer(customerList &customerList);
+void updateVehicleStatusTemporary(adr_vehicle &vehicle,string vehicleStatus);
 /*adr_damage CreateElementDamage(adr_damage AD,string title, string explanation, string status);
 void insertLastDamage(customerList &customerList, adr_damage AD);
 */
-void printData(customerList customerList);
-adr_vehicle findVehicleAddress(vehicleList vehicleList, string vehicle_id);
 #endif //MENU_H_INCLUDED
