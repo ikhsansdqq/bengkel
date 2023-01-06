@@ -244,7 +244,7 @@ void deleteVehicle(adr_customer &customer, string idToDelete) {
 
 void deleteAllVehicle(adr_customer &customer) {
     while(customer->vehicle != nullptr) {
-        deleteDamage(customer, customer->vehicle->vehicle_id);
+        deleteVehicle(customer, customer->vehicle->vehicle_id);
     }
 }
 
