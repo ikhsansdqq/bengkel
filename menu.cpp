@@ -41,12 +41,6 @@ CreateElementVehicleData(adr_vehicle addressVehicle, string brand, string car_ty
     addressVehicle->damage = nullptr;
     addressVehicle->next = nullptr;
 
-    if (addressVehicle->status == "DONE") {
-        cout << "TRUE" << endl;
-    } else {
-        cout << "FALSE" << endl;
-    }
-
     return addressVehicle;
 }
 
