@@ -13,7 +13,7 @@ struct damage{
 };
 
 struct vehicle{
-    string brand,car_type,model, status;
+    string brand,car_type,model, status,vehicle_id;
     int year;
     adr_damage damage;
     adr_vehicle next;
@@ -21,7 +21,7 @@ struct vehicle{
 
 struct customer{
     string name,customer_id,status;
-    adr_vehicle child;
+    adr_vehicle vehicle;
     adr_customer next;
 };
 
@@ -29,21 +29,18 @@ struct customerList{
     adr_customer first;
 };
 
-struct vehicleList{
-    adr_vehicle first;
-};
-
-struct conditionChecking {
-    adr_customer customerStatusCondition;
-    adr_vehicle vehicleStatusCondition;
-};
 
 void createListCustomer(customerList &customerList);
-adr_customer CreateElementCustomerData(adr_customer addressCustomer,string name,string customer_id,string status);
+adr_customer CreateElementCustomerData(adr_customer addressCustomer,string name,string customer_id);
 void insertLastCustomer(customerList &customerList, adr_customer addressCustomer);
-adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle,string brand,string car_type,string model,string status, int year);
-void insertLastVehicle(customerList &customerList, vehicleList &vehicleList,string customer_id,adr_vehicle addressVehicle);
+adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle,string brand,string vehicle_id, string car_type,string model,string status, int year);
+void insertLastVehicle(customerList &customerList,string customer_id,adr_vehicle addressVehicle);
 adr_customer findCustomerAddress(customerList customerList,string customer_id);
-
-void printData(customerList customerList);
+void printAllDataCustomer(customerList customerList);
+void printDataVehicle(customerList customerList, string customer_id);
+adr_vehicle findVehicleAddress(adr_customer addressCustomer, string vehicle_id);
+bool checkAllVehicleStatus(adr_customer customer);
+void updateCustomerStatus(adr_customer &customer);
+void updateAllCustomer(customerList &customerList);
+void updateVehicleStatusTemporary(adr_vehicle &vehicle,string vehicleStatus);
 #endif //MENU_H_INCLUDED
