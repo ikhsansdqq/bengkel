@@ -7,33 +7,33 @@ typedef struct damage *adr_damage;
 typedef struct vehicle *adr_vehicle;
 typedef struct customer *adr_customer;
 
-typedef struct damage{
+struct damage{
     string title, explanation, status;
     adr_damage next;
 };
 
-typedef struct vehicle{
+struct vehicle{
     string brand,car_type,model, status;
     int year;
     adr_damage damage;
     adr_vehicle next;
 };
 
-typedef struct customer{
+struct customer{
     string name,customer_id,status;
     adr_vehicle child;
     adr_customer next;
 };
 
-typedef struct customerList{
+struct customerList{
     adr_customer first;
 };
 
-typedef struct vehicleList{
+struct vehicleList{
     adr_vehicle first;
 };
 
-typedef struct conditionChecking {
+struct conditionChecking {
     adr_customer customerStatusCondition;
     adr_vehicle vehicleStatusCondition;
 };
