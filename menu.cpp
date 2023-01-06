@@ -10,7 +10,7 @@ adr_customer CreateElementCustomerData(adr_customer addressCustomer, string name
     addressCustomer = new customer;
     addressCustomer->name = name;
     addressCustomer->customer_id = customer_id;
-    addressCustomer->status = "No Vehicle Assigned yet"; // Default condition.
+    addressCustomer->status = NO_VEHICLE_ASSIGNED; // Default condition.
     addressCustomer->vehicle = nullptr;
     addressCustomer->next = nullptr;
     return addressCustomer;
@@ -29,9 +29,7 @@ void insertLastCustomer(customerList &customerList, adr_customer addressCustomer
 
 }
 
-adr_vehicle
-CreateElementVehicleData(adr_vehicle addressVehicle, string brand, string vehicle_id, string car_type, string model,
-                         string status, int year) { //Creating element for Vehicle BOX aka The data to some customer
+adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle, string brand, string vehicle_id, string car_type, string model, string status, int year) { //Creating element for Vehicle BOX aka The data to some customer
     addressVehicle = new vehicle;
     addressVehicle->brand = brand;
     addressVehicle->vehicle_id = vehicle_id;
@@ -65,6 +63,8 @@ void insertLastVehicle(customerList &customerList, string customer_id, adr_vehic
         cout << "There is no such customer with this ID" << endl;
         return;
     }
+    addressCustomer->status = IN_PROGRESS;
+    
     adr_vehicle addressVehicle2 = addressCustomer->vehicle;
     if (addressVehicle2 == nullptr) {
         addressCustomer->vehicle = addressVehicle;
@@ -129,7 +129,7 @@ bool checkAllVehicleStatus(adr_customer customer) {
     adr_vehicle addressVehicle = customer->vehicle;
     if (addressVehicle != nullptr) {
         while (addressVehicle != nullptr) {
-            if (addressVehicle->status != "DONE") {
+            if (addressVehicle->status != DONE) {
                 return false;
             }
             addressVehicle = addressVehicle->next;
@@ -141,9 +141,9 @@ bool checkAllVehicleStatus(adr_customer customer) {
 
 void updateCustomerStatus(adr_customer &customer) {
     if (checkAllVehicleStatus(customer)) {
-        customer->status = "DONE";
+        customer->status = DONE;
     } else {
-        customer->status = "In Progress";
+        customer->status = IN_PROGRESS;
     }
 }
 
@@ -155,8 +155,7 @@ void updateAllCustomer(customerList &customerList) {
     }
 }
 
-void updateVehicleStatusTemporary(adr_vehicle &vehicle,
-                                  string vehicleStatus) { //this is just temporary please to not use this in future use ! .. instead use the one below or fix it
+void updateVehicleStatusTemporary(adr_vehicle &vehicle, string vehicleStatus) { //this is just temporary please to not use this in future use ! .. instead use the one below or fix it
     vehicle->status = vehicleStatus;
 }
 
@@ -178,10 +177,99 @@ bool checkAllDamageStatus(adr_vehicle vehicle, string statusCheck) {
 
 void updateVehicleStatus(adr_vehicle &vehicle) {
     if(checkAllDamageStatus(vehicle, DONE)) {
-        vehicle->status = "DONE";
+        vehicle->status = DONE;
     }
 }
 
-adr_damage CreateElementDamage(adr_damage AD,string title, string explanation, string status);
+adr_damage CreateElementDamage(adr_damage AD,string title, string explanation, string status, string damage_id);
 void insertLastDamage(customerList customerList, adr_damage AD);
 */
+
+void deleteDamage(adr_vehicle &vehicle, string idToDelete) {
+    if(vehicle->damage != nullptr) {
+        adr_damage damageToDelete;
+        if(vehicle->damage->damage_id != idToDelete) {
+            adr_damage i = vehicle->damage;
+            while(i->next->damage_id != idToDelete && i != nullptr) {
+                i = i->next;
+            }
+            if(i == nullptr) {
+                cout << "There is no such damage with this ID" << endl;
+                return;
+            }
+            damageToDelete = i->next;
+            i->next = damageToDelete->next;
+            damageToDelete->next = nullptr;
+        }
+        else {
+            damageToDelete = vehicle->damage;
+            vehicle->damage = damageToDelete->next;
+            damageToDelete->next = nullptr;
+        }
+        delete damageToDelete;
+    }
+}
+
+void deleteAllDamage(adr_vehicle &vehicle) {
+    while(vehicle->damage != nullptr) {
+        deleteDamage(vehicle, vehicle->damage->damage_id);
+    }
+}
+
+void deleteVehicle(adr_customer &customer, string idToDelete) {
+    if(customer->vehicle != nullptr) {
+        adr_vehicle vehicleToDelete;
+        if(customer->vehicle->vehicle_id != idToDelete) {
+            adr_vehicle i = customer->vehicle;
+            while(i->next->vehicle_id != idToDelete && i != nullptr) {
+                i = i->next;
+            }
+            if(i == nullptr) {
+                cout << "There is no such vehicle with this ID" << endl;
+                return;
+            }
+            vehicleToDelete = i->next;
+            i->next = vehicleToDelete->next;
+            vehicleToDelete->next = nullptr;
+        }
+        else {
+            vehicleToDelete = vehicle->damage;
+            vehicle->damage = vehicleToDelete->next;
+            vehicleToDelete->next = nullptr;
+        }
+        deleteAllDamage(vehicleToDelete);
+        delete vehicleToDelete;
+    }
+}
+
+void deleteAllVehicle(adr_customer &customer) {
+    while(customer->vehicle != nullptr) {
+        deleteDamage(customer, customer->vehicle->vehicle_id);
+    }
+}
+
+void deleteCustomer(customerList &customerList, string idToDelete) {
+    if(customerList.first != nullptr) {
+        adr_customer customerToDelete;
+        if(customerList.first->customer_id != idToDelete) {
+            adr_customer i = customerList.first;
+            while(i->next->customer_id != idToDelete && i != nullptr) {
+                i = i->next;
+            }
+            if(i == nullptr) {
+                cout << "There is no such customer with this ID" << endl;
+                return;
+            }
+            customerToDelete = i->next;
+            i->next = customerToDelete->next;
+            customerToDelete->next = nullptr;
+        }
+        else {
+            customerToDelete = vehicle->damage;
+            vehicle->damage = customerToDelete->next;
+            customerToDelete->next = nullptr;
+        }
+        deleteAllVehicle(customerToDelete);
+        delete customerToDelete;
+    }
+}

@@ -3,12 +3,16 @@
 #include <iostream>
 using namespace std;
 
+const string DONE = "DONE";
+const string IN_PROGRESS = "IN PROGRESS";
+const string NO_VEHICLE_ASSIGNED = "NO VEHICLE ASSIGNED";
+
 typedef struct damage *adr_damage;
 typedef struct vehicle *adr_vehicle;
 typedef struct customer *adr_customer;
 
 struct damage{
-    string title, explanation, status;
+    string title, explanation, status, damage_id;
     adr_damage next;
 };
 
@@ -42,4 +46,11 @@ bool checkAllVehicleStatus(adr_customer customer);
 void updateCustomerStatus(adr_customer &customer);
 void updateAllCustomer(customerList &customerList);
 void updateVehicleStatusTemporary(adr_vehicle &vehicle,string vehicleStatus);
+
+void deleteDamage(adr_vehicle &vehicle, string idToDelete);
+void deleteAllDamage(adr_vehicle &vehicle);
+void deleteVehicle(adr_customer &customer, string idToDelete);
+void deleteAllVehicle(adr_customer &customer);
+void deleteCustomer(customerList &customerList, string idToDelete);
+
 #endif //MENU_H_INCLUDED
