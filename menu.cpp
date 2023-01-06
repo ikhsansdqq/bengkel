@@ -1,4 +1,5 @@
 #include "menu.h"
+
 using namespace std;
 
 void createListCustomer(customerList &customerList) {
@@ -9,7 +10,7 @@ adr_customer CreateElementCustomerData(adr_customer addressCustomer, string name
     addressCustomer = new customer;
     addressCustomer->name = name;
     addressCustomer->customer_id = customer_id;
-    addressCustomer->status = "No Vehicle Assigned yet"; //initial start for status will be updated later
+    addressCustomer->status = "No Vehicle Assigned yet"; // Default condition.
     addressCustomer->vehicle = nullptr;
     addressCustomer->next = nullptr;
     return addressCustomer;
@@ -28,14 +29,17 @@ void insertLastCustomer(customerList &customerList, adr_customer addressCustomer
 
 }
 
-adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle, string brand, string vehicle_id, string car_type, string model,string status, int year) { //Creating element for Vehicle BOX aka The data to some customer
+adr_vehicle
+CreateElementVehicleData(adr_vehicle addressVehicle, string brand, string vehicle_id, string car_type, string model,
+                         string status, int year) { //Creating element for Vehicle BOX aka The data to some customer
     addressVehicle = new vehicle;
     addressVehicle->brand = brand;
     addressVehicle->vehicle_id = vehicle_id;
     addressVehicle->car_type = car_type;
     addressVehicle->model = model;
     addressVehicle->status = status;
-    addressVehicle->year = year;"No Vehicle Assigned yet"; //initial start for status will be updated later
+    addressVehicle->year = year;
+    "No Vehicle Assigned yet"; //initial start for status will be updated later
     addressVehicle->damage = nullptr;
     addressVehicle->next = nullptr;
 
@@ -86,7 +90,7 @@ void printAllDataCustomer(customerList customerList) {
     }
 }
 
-void printDataVehicle(customerList customerList, string customer_id){
+void printDataVehicle(customerList customerList, string customer_id) {
     adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
     adr_vehicle addressVehicle = addressCustomer->vehicle;
     int vehicleCount = 1;
@@ -106,7 +110,7 @@ void printDataVehicle(customerList customerList, string customer_id){
         cout << endl;
         addressVehicle = addressVehicle->next;
         vehicleCount++;
-        }
+    }
 }
 
 adr_vehicle findVehicleAddress(adr_customer addressCustomer, string vehicle_id) {
@@ -123,34 +127,36 @@ adr_vehicle findVehicleAddress(adr_customer addressCustomer, string vehicle_id) 
 
 bool checkAllVehicleStatus(adr_customer customer) {
     adr_vehicle addressVehicle = customer->vehicle;
-    if(addressVehicle != nullptr) {
-        while(addressVehicle != nullptr) {
-            if(addressVehicle->status != "DONE") {
+    if (addressVehicle != nullptr) {
+        while (addressVehicle != nullptr) {
+            if (addressVehicle->status != "DONE") {
                 return false;
             }
             addressVehicle = addressVehicle->next;
         }
         return true;
     }
+    return false;
 }
 
 void updateCustomerStatus(adr_customer &customer) {
-    if(checkAllVehicleStatus(customer)) {
+    if (checkAllVehicleStatus(customer)) {
         customer->status = "DONE";
-    }else{
+    } else {
         customer->status = "In Progress";
     }
 }
 
 void updateAllCustomer(customerList &customerList) {
     adr_customer addressCustomer = customerList.first;
-    while(addressCustomer != nullptr) {
+    while (addressCustomer != nullptr) {
         updateCustomerStatus(addressCustomer);
         addressCustomer = addressCustomer->next;
     }
 }
 
-void updateVehicleStatusTemporary(adr_vehicle &vehicle,string vehicleStatus) { //this is just temporary please to not use this in future use ! .. instead use the one below or fix it
+void updateVehicleStatusTemporary(adr_vehicle &vehicle,
+                                  string vehicleStatus) { //this is just temporary please to not use this in future use ! .. instead use the one below or fix it
     vehicle->status = vehicleStatus;
 }
 

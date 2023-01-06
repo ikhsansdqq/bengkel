@@ -29,7 +29,6 @@ struct customerList{
     adr_customer first;
 };
 
-
 void createListCustomer(customerList &customerList);
 adr_customer CreateElementCustomerData(adr_customer addressCustomer,string name,string customer_id);
 void insertLastCustomer(customerList &customerList, adr_customer addressCustomer);

@@ -1,11 +1,11 @@
 #include "menu.h"
 
 int main() {
-    customerList customerList;
+    customerList customerList{};
     adr_customer addressCustomer = nullptr;
     adr_vehicle addressVehicle = nullptr;
     string customerName, customerID, vehicleBrand, vehicleID, vehicleType, vehicleModel, vehicleStatus;
-    int picker = 1, vehicleReleaseYear;
+//    int picker, vehicleReleaseYear;
 
     createListCustomer(customerList);
 
@@ -69,6 +69,11 @@ int main() {
         }
     }
     */
+    if (customerList.first == nullptr) {
+        cout << "Customer List is still empty" << endl;
+    } else {
+        cout << customerList.first << endl;
+    }
 
     cout << "======= THIS IS JUST A PROCEDURE AND FUNCTION TEST =======" << endl;
     cout << "Testing by input 2 customer data" << endl;
@@ -77,24 +82,28 @@ int main() {
     insertLastCustomer(customerList, addressCustomer);
     addressCustomer = CreateElementCustomerData(addressCustomer, "Alam", "ARP001");
     insertLastCustomer(customerList, addressCustomer);
-    printAllDataCustomer(customerList); 
+    printAllDataCustomer(customerList);
+
     cout << endl;
 
     cout << "Testing by input 2 vehicle data and update customer status" << endl;
     cout << "==========" << endl;
-    addressVehicle = CreateElementVehicleData(addressVehicle, "Toyota", "TS-98","SUV", "Land Cruiser", "In Progress", 1998);
-    insertLastVehicle(customerList,"FRM001", addressVehicle);
+    addressVehicle = CreateElementVehicleData(addressVehicle, "Toyota", "TS-98", "SUV", "Land Cruiser", "In Progress",
+                                              1998);
+    insertLastVehicle(customerList, "FRM001", addressVehicle);
     addressVehicle = CreateElementVehicleData(addressVehicle, "Ford", "FT-80", "Truck", "F150", "DONE", 1980);
-    insertLastVehicle(customerList,"ARP001", addressVehicle);
+    insertLastVehicle(customerList, "ARP001", addressVehicle);
 
     updateAllCustomer(customerList);
     printAllDataCustomer(customerList);
     cout << endl;
-    printDataVehicle(customerList,"FRM001");
-    printDataVehicle(customerList,"ARP001");
+    printDataVehicle(customerList, "FRM001");
+    printDataVehicle(customerList, "ARP001");
     cout << endl;
 
-    cout << "Testing changing vehicle status from InProgress to DONE and see if its updated on the customer side (Fauzan Data will be used for testing)" << endl;
+    cout
+            << "Testing changing vehicle status from InProgress to DONE and see if its updated on the customer side (Fauzan Data will be used for testing)"
+            << endl;
     cout << "==========" << endl;
     customerID = "FRM001";
     vehicleID = "TS-98";
@@ -104,10 +113,10 @@ int main() {
     cout << "What status ? (DONE or InProgress only) " << vehicleStatus << endl;
     cout << endl;
     addressCustomer = findCustomerAddress(customerList, customerID);
-    addressVehicle = findVehicleAddress(addressCustomer,vehicleID);
-    updateVehicleStatusTemporary(addressVehicle,vehicleStatus);
+    addressVehicle = findVehicleAddress(addressCustomer, vehicleID);
+    updateVehicleStatusTemporary(addressVehicle, vehicleStatus);
     updateAllCustomer(customerList);
     printAllDataCustomer(customerList);
-    printDataVehicle(customerList,"FRM001");
+    printDataVehicle(customerList, "FRM001");
     return 0;
 }
