@@ -26,7 +26,6 @@ void insertLastCustomer(customerList &customerList, adr_customer addressCustomer
         addressCustomer2 = addressCustomer2->next;
     }
     addressCustomer2->next = addressCustomer;
-
 }
 
 adr_vehicle
@@ -40,12 +39,6 @@ CreateElementVehicleData(adr_vehicle addressVehicle, string brand, string car_ty
     addressVehicle->year = year;
     addressVehicle->damage = nullptr;
     addressVehicle->next = nullptr;
-
-    if (addressVehicle->status == "DONE") {
-        cout << "TRUE" << endl;
-    } else {
-        cout << "FALSE" << endl;
-    }
 
     return addressVehicle;
 }
@@ -83,11 +76,6 @@ void insertLastVehicle(customerList &customerList, vehicleList &vehicleList, str
     addressVehicle2->next = addressVehicle;
 }
 
-/*
-adr_damage CreateElementDamage(adr_damage AD,string title, string explanation, string status);
-void insertLastDamage(customerList customerList, adr_damage AD);
-*/
-
 void printData(customerList customerList) {
     adr_customer addressCustomer = customerList.first;
     adr_vehicle addressVehicle;
@@ -106,6 +94,7 @@ void printData(customerList customerList) {
             cout << "There is no vehicle assigned to this customer" << endl;
             return;
         }
+
         while (addressVehicle != nullptr) { // Printing the Vehicle inside the customer
             cout << "Vehicle      : " << vehicleCount << endl;
             cout << "Brand        : " << addressVehicle->brand << endl;
@@ -121,4 +110,12 @@ void printData(customerList customerList) {
         addressCustomer = addressCustomer->next;
         customerCount++;
     }
+
+    cout << "==== END OF DATA ====" << endl;
+    cout << "There is no data" << endl;
 }
+
+/*
+adr_damage CreateElementDamage(adr_damage AD,string title, string explanation, string status);
+void insertLastDamage(customerList customerList, adr_damage AD);
+*/
