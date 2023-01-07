@@ -64,7 +64,7 @@ void insertLastVehicle(customerList &customerList, string customer_id, adr_vehic
         return;
     }
     addressCustomer->status = IN_PROGRESS;
-    
+
     adr_vehicle addressVehicle2 = addressCustomer->vehicle;
     if (addressVehicle2 == nullptr) {
         addressCustomer->vehicle = addressVehicle;
@@ -233,8 +233,8 @@ void deleteVehicle(adr_customer &customer, string idToDelete) {
             vehicleToDelete->next = nullptr;
         }
         else {
-            vehicleToDelete = vehicle->damage;
-            vehicle->damage = vehicleToDelete->next;
+            vehicleToDelete = customer->vehicle;
+            customer->vehicle = vehicleToDelete->next;
             vehicleToDelete->next = nullptr;
         }
         deleteAllDamage(vehicleToDelete);
@@ -265,8 +265,8 @@ void deleteCustomer(customerList &customerList, string idToDelete) {
             customerToDelete->next = nullptr;
         }
         else {
-            customerToDelete = vehicle->damage;
-            vehicle->damage = customerToDelete->next;
+            customerToDelete = customerList.first;
+            customerList.first = customerToDelete->next;
             customerToDelete->next = nullptr;
         }
         deleteAllVehicle(customerToDelete);
