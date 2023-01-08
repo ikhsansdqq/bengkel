@@ -53,4 +53,8 @@ void deleteVehicle(adr_customer &customer, string idToDelete);
 void deleteAllVehicle(adr_customer &customer);
 void deleteCustomer(customerList &customerList, string idToDelete);
 
+adr_damage CreateElementDamageData(adr_damage addressDamage,string title,string explanation, string status,string damage_id);
+void insertDamage(customerList &customerList,string customer_id,string vehicle_id, adr_damage addressDamage);
+void printDataDamage(customerList customerList, string customer_id, string vehicle_id);
+
 #endif //MENU_H_INCLUDED
