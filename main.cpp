@@ -139,8 +139,6 @@ int main() {
     printDataDamage(customerList, "ARP001", "FT-80");
 
     cout << endl;
-    cout << endl;
-    cout << "==========" << endl;
 
     return 0;
 }

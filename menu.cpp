@@ -304,9 +304,9 @@ void printDataDamage(customerList customerList, string customer_id, string vehic
     adr_vehicle addressVehicle = findVehicleAddress(addressCustomer, vehicle_id);
     adr_damage addressDamage = addressVehicle->damage;
     int DamageCount = 1;
-    cout << "====== Damage List for Customer" << addressCustomer->name << "With vehicle id : "<< addressVehicle->vehicle_id <<" ======" << endl;
+    cout << "====== Damage List for " << addressCustomer->name << " with vehicle id number : "<< addressVehicle->vehicle_id <<" ======" << endl;
     if (addressDamage == nullptr) {
-        cout << "There is no damage assigned to this car" << endl;
+        cout << "This vehicle has no damages." << endl;
         return;
     }
     while (addressDamage != nullptr) { // Printing the Vehicle inside the customer
