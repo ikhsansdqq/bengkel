@@ -1,5 +1,4 @@
 #include "menu.h"
-
 using namespace std;
 
 void createListCustomer(customerList &customerList) {
@@ -37,7 +36,6 @@ adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle, string brand, s
     addressVehicle->model = model;
     addressVehicle->status = status;
     addressVehicle->year = year;
-    "No Vehicle Assigned yet"; //initial start for status will be updated later
     addressVehicle->damage = nullptr;
     addressVehicle->next = nullptr;
 
