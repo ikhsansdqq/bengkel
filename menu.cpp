@@ -191,10 +191,6 @@ void deleteDamage(adr_vehicle &vehicle, string idToDelete) {
             while(i->next->damage_id != idToDelete && i != nullptr) {
                 i = i->next;
             }
-            if(i == nullptr) {
-                cout << "There is no such damage with this ID" << endl;
-                return;
-            }
             damageToDelete = i->next;
             i->next = damageToDelete->next;
             damageToDelete->next = nullptr;
@@ -219,12 +215,8 @@ void deleteVehicle(adr_customer &customer, string idToDelete) {
         adr_vehicle vehicleToDelete;
         if(customer->vehicle->vehicle_id != idToDelete) {
             adr_vehicle i = customer->vehicle;
-            while(i->next->vehicle_id != idToDelete && i != nullptr) {
+            while(i->next->vehicle_id != idToDelete) {
                 i = i->next;
-            }
-            if(i == nullptr) {
-                cout << "There is no such vehicle with this ID" << endl;
-                return;
             }
             vehicleToDelete = i->next;
             i->next = vehicleToDelete->next;
@@ -253,12 +245,8 @@ void deleteCustomer(customerList &customerList, string idToDelete) {
         adr_customer customerToDelete;
         if(customerList.first->customer_id != idToDelete) {
             adr_customer i = customerList.first;
-            while(i->next->customer_id != idToDelete && i != nullptr) {
+            while(i->next->customer_id != idToDelete) {
                 i = i->next;
-            }
-            if(i == nullptr) {
-                cout << "There is no such customer with this ID" << endl;
-                return;
             }
             customerToDelete = i->next;
             i->next = customerToDelete->next;
@@ -295,10 +283,6 @@ void insertDamage(customerList &customerList,string customer_id,string vehicle_i
     }
 
     adr_vehicle addressVehicle = findVehicleAddress(addressCustomer, vehicle_id);
-    if (addressCustomer == nullptr) {
-        cout << "There is no such vechile with this ID" << endl;
-        return;
-    }
     addressCustomer->status = IN_PROGRESS;
     addressVehicle->status = IN_PROGRESS;
 
