@@ -66,6 +66,7 @@ int main() {
     updateDamageStatus(addressDamage,DONE);
     printDataDamage(customerList, "ARP001", "FT-80");
     updateVehicleStatus(addressVehicle);
+    updateAllCustomer(customerList);
     printDataVehicle(customerList,"ARP001");
 
     addressDamage = findDamageAddress(addressVehicle,"DEF");
