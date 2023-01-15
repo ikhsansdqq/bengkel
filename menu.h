@@ -6,13 +6,30 @@ using namespace std;
 const string DONE = "DONE";
 const string IN_PROGRESS = "IN PROGRESS";
 const string NO_VEHICLE_ASSIGNED = "NO VEHICLE ASSIGNED";
+const string NO_DAMAGE_ASSIGNED = "NO DAMAGE ASSIGNED";
+const string NO_BITCHES =
+"———————————No bitches?———————————\n"
+"⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝\n"
+"⠸⡸⠜⠕⠕⠁⢁⢇⢏⢽⢺⣪⡳⡝⣎⣏⢯⢞⡿⣟⣷⣳⢯⡷⣽⢽⢯⣳⣫⠇\n"
+"⠀⠀⢀⢀⢄⢬⢪⡪⡎⣆⡈⠚⠜⠕⠇⠗⠝⢕⢯⢫⣞⣯⣿⣻⡽⣏⢗⣗⠏⠀\n"
+"⠪⡪⡪⣪⢪⢺⢸⢢⢓⢆⢤⢀⠀⠀⠀⠀⠈⢊⢞⡾⣿⡯⣏⢮⠷⠁\n"
+"⠀⠀⠀⠈⠊⠆⡃⠕⢕⢇⢇⢇⢇⢇⢏⢎⢎⢆⢄⠀⢑⣽⣿⢝⠲⠉\n"
+"⠀⠀⠀⠀⠀⡿⠂⠠⠀⡇⢇⠕⢈⣀⠀⠁⠡⠣⡣⡫⣂⣿⠯⢪⠰⠂\n"
+"⠀⠀⠀⠀⡦⡙⡂⢀⢤⢣⠣⡈⣾⡃⠠⠄⠀⡄⢱⣌⣶⢏⢊⠂\n"
+"⠀⠀⠀⠀⢝⡲⣜⡮⡏⢎⢌⢂⠙⠢⠐⢀⢘⢵⣽⣿⡿⠁⠁\n"
+"⠀⠀⠀⠀⠨⣺⡺⡕⡕⡱⡑⡆⡕⡅⡕⡜⡼⢽⡻⠏\n"
+"⠀⠀⠀⠀⣼⣳⣫⣾⣵⣗⡵⡱⡡⢣⢑⢕⢜⢕⡝:\n"
+"⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟\n"
+"⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟\n"
+"⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋\n"
+"—————————————————————————————";
 
 typedef struct damage *adr_damage;
 typedef struct vehicle *adr_vehicle;
 typedef struct customer *adr_customer;
 
 struct damage{
-    string title, explanation, status, damage_id;
+    string title, explanation, status,damage_id;
     adr_damage next;
 };
 
@@ -36,7 +53,7 @@ struct customerList{
 void createListCustomer(customerList &customerList);
 adr_customer CreateElementCustomerData(adr_customer addressCustomer,string name,string customer_id);
 void insertLastCustomer(customerList &customerList, adr_customer addressCustomer);
-adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle,string brand,string vehicle_id, string car_type,string model,string status, int year);
+adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle,string brand,string vehicle_id, string car_type,string model, int year);
 void insertLastVehicle(customerList &customerList,string customer_id,adr_vehicle addressVehicle);
 adr_customer findCustomerAddress(customerList customerList,string customer_id);
 void printAllDataCustomer(customerList customerList);
@@ -45,8 +62,9 @@ adr_vehicle findVehicleAddress(adr_customer addressCustomer, string vehicle_id);
 bool checkAllVehicleStatus(adr_customer customer);
 void updateCustomerStatus(adr_customer &customer);
 void updateAllCustomer(customerList &customerList);
-void updateVehicleStatusTemporary(adr_vehicle &vehicle,string vehicleStatus);
+void updateVehicleStatus(adr_vehicle &vehicle);
 
+adr_damage findDamageAddress(adr_vehicle addressvehicle, string damage_id);
 void deleteDamage(adr_vehicle &vehicle, string idToDelete);
 void deleteAllDamage(adr_vehicle &vehicle);
 void deleteVehicle(adr_customer &customer, string idToDelete);
@@ -56,5 +74,8 @@ void deleteCustomer(customerList &customerList, string idToDelete);
 adr_damage CreateElementDamageData(adr_damage addressDamage,string title,string explanation, string status,string damage_id);
 void insertDamage(customerList &customerList,string customer_id,string vehicle_id, adr_damage addressDamage);
 void printDataDamage(customerList customerList, string customer_id, string vehicle_id);
+void updateDamageStatus(adr_damage &damage, string damageStatus);
+bool checkAllDamageStatus(adr_vehicle vehicle);
+
 
 #endif //MENU_H_INCLUDED

@@ -28,20 +28,6 @@ void insertLastCustomer(customerList &customerList, adr_customer addressCustomer
 
 }
 
-adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle, string brand, string vehicle_id, string car_type, string model, string status, int year) { //Creating element for Vehicle BOX aka The data to some customer
-    addressVehicle = new vehicle;
-    addressVehicle->brand = brand;
-    addressVehicle->vehicle_id = vehicle_id;
-    addressVehicle->car_type = car_type;
-    addressVehicle->model = model;
-    addressVehicle->status = status;
-    addressVehicle->year = year;
-    addressVehicle->damage = nullptr;
-    addressVehicle->next = nullptr;
-
-    return addressVehicle;
-}
-
 adr_customer findCustomerAddress(customerList customerList, string customer_id) {
     adr_customer addressCustomer = customerList.first;
     while (addressCustomer != nullptr) {
@@ -54,6 +40,69 @@ adr_customer findCustomerAddress(customerList customerList, string customer_id) 
     return nullptr;
 }
 
+void printAllDataCustomer(customerList customerList) {
+    adr_customer addressCustomer = customerList.first;
+    int customerCount = 1;
+    while (addressCustomer != nullptr) {
+        cout << "====== CUSTOMER DATA " << customerCount << " ======" << endl;
+        cout << "Customer Name    :   " << addressCustomer->name << endl;
+        cout << "Customer ID      :   " << addressCustomer->customer_id << endl;
+        cout << "Customer Status  :   " << addressCustomer->status << endl;
+        addressCustomer = addressCustomer->next;
+        customerCount++;
+    }
+}
+
+void updateCustomerStatus(adr_customer &customer) {
+    if (checkAllVehicleStatus(customer)) {
+        customer->status = DONE;
+    } else {
+        customer->status = IN_PROGRESS;
+    }
+}
+
+void updateAllCustomer(customerList &customerList) {
+    adr_customer addressCustomer = customerList.first;
+    while (addressCustomer != nullptr) {
+        updateCustomerStatus(addressCustomer);
+        addressCustomer = addressCustomer->next;
+    }
+}
+
+void deleteCustomer(customerList &customerList, string idToDelete) {
+    if(customerList.first != nullptr) {
+        adr_customer customerToDelete;
+        if(customerList.first->customer_id != idToDelete) {
+            adr_customer i = customerList.first;
+            while(i->next->customer_id != idToDelete) {
+                i = i->next;
+            }
+            customerToDelete = i->next;
+            i->next = customerToDelete->next;
+            customerToDelete->next = nullptr;
+        }
+        else {
+            customerToDelete = customerList.first;
+            customerList.first = customerToDelete->next;
+            customerToDelete->next = nullptr;
+        }
+        deleteAllVehicle(customerToDelete);
+        delete customerToDelete;
+    }
+}
+
+adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle, string brand, string vehicle_id, string car_type, string model, int year) { //Creating element for Vehicle BOX aka The data to some customer
+    addressVehicle = new vehicle;
+    addressVehicle->brand = brand;
+    addressVehicle->vehicle_id = vehicle_id;
+    addressVehicle->car_type = car_type;
+    addressVehicle->model = model;
+    addressVehicle->status = NO_DAMAGE_ASSIGNED;
+    addressVehicle->year = year;
+    addressVehicle->damage = nullptr;
+    addressVehicle->next = nullptr;
+    return addressVehicle;
+}
 
 void insertLastVehicle(customerList &customerList, string customer_id, adr_vehicle addressVehicle) {
     adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
@@ -73,42 +122,6 @@ void insertLastVehicle(customerList &customerList, string customer_id, adr_vehic
         addressVehicle2 = addressVehicle2->next;
     }
     addressVehicle2->next = addressVehicle;
-}
-
-void printAllDataCustomer(customerList customerList) {
-    adr_customer addressCustomer = customerList.first;
-    int customerCount = 1;
-    while (addressCustomer != nullptr) {
-        cout << "====== CUSTOMER DATA " << customerCount << " ======" << endl;
-        cout << "Customer Name    :   " << addressCustomer->name << endl;
-        cout << "Customer ID      :   " << addressCustomer->customer_id << endl;
-        cout << "Customer Status  :   " << addressCustomer->status << endl;
-        addressCustomer = addressCustomer->next;
-        customerCount++;
-    }
-}
-
-void printDataVehicle(customerList customerList, string customer_id) {
-    adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
-    adr_vehicle addressVehicle = addressCustomer->vehicle;
-    int vehicleCount = 1;
-    cout << "====== Vehicle List " << addressCustomer->name << " ======" << endl;
-    if (addressVehicle == nullptr) {
-        cout << "There is no vehicle assigned to this customer" << endl;
-        return;
-    }
-    while (addressVehicle != nullptr) { // Printing the Vehicle inside the customer
-        cout << "Vehicle      : " << vehicleCount << endl;
-        cout << "Brand        : " << addressVehicle->brand << endl;
-        cout << "ID           : " << addressVehicle->vehicle_id << endl;
-        cout << "Type         : " << addressVehicle->car_type << endl;
-        cout << "Model        : " << addressVehicle->model << endl;
-        cout << "Year         : " << addressVehicle->year << endl;
-        cout << "Status       : " << addressVehicle->status << endl;
-        cout << endl;
-        addressVehicle = addressVehicle->next;
-        vehicleCount++;
-    }
 }
 
 adr_vehicle findVehicleAddress(adr_customer addressCustomer, string vehicle_id) {
@@ -137,51 +150,78 @@ bool checkAllVehicleStatus(adr_customer customer) {
     return false;
 }
 
-void updateCustomerStatus(adr_customer &customer) {
-    if (checkAllVehicleStatus(customer)) {
-        customer->status = DONE;
-    } else {
-        customer->status = IN_PROGRESS;
+void printDataVehicle(customerList customerList, string customer_id) {
+    adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
+    adr_vehicle addressVehicle = addressCustomer->vehicle;
+    int vehicleCount = 1;
+    cout << "====== Vehicle List " << addressCustomer->name << " ======" << endl;
+    if (addressVehicle == nullptr) {
+        cout << "There is no vehicle assigned to this customer" << endl;
+        return;
+    }
+    while (addressVehicle != nullptr) { // Printing the Vehicle inside the customer
+        cout << "Vehicle      : " << vehicleCount << endl;
+        cout << "Brand        : " << addressVehicle->brand << endl;
+        cout << "ID           : " << addressVehicle->vehicle_id << endl;
+        cout << "Type         : " << addressVehicle->car_type << endl;
+        cout << "Model        : " << addressVehicle->model << endl;
+        cout << "Year         : " << addressVehicle->year << endl;
+        cout << "Status       : " << addressVehicle->status << endl;
+        cout << endl;
+        addressVehicle = addressVehicle->next;
+        vehicleCount++;
     }
 }
-
-void updateAllCustomer(customerList &customerList) {
-    adr_customer addressCustomer = customerList.first;
-    while (addressCustomer != nullptr) {
-        updateCustomerStatus(addressCustomer);
-        addressCustomer = addressCustomer->next;
-    }
-}
-
-void updateVehicleStatusTemporary(adr_vehicle &vehicle, string vehicleStatus) { //this is just temporary please to not use this in future use ! .. instead use the one below or fix it
-    vehicle->status = vehicleStatus;
-}
-
-/*
-bool checkAllDamageStatus(adr_vehicle vehicle, string statusCheck) {
-    if(vehicle->damage != nullptr) {
-        adr_damage i = vehicle->damage;
-        while(i != nullptr) {
-            if(i->status != statusCheck) {
-                return false;
-            }
-            i = i->next;
-        }
-        return true;
-    }
-    return true;
-}
-
 
 void updateVehicleStatus(adr_vehicle &vehicle) {
-    if(checkAllDamageStatus(vehicle, DONE)) {
+    if(checkAllDamageStatus(vehicle)) {
         vehicle->status = DONE;
     }
 }
 
-adr_damage CreateElementDamage(adr_damage AD,string title, string explanation, string status, string damage_id);
-void insertLastDamage(customerList customerList, adr_damage AD);
-*/
+adr_damage CreateElementDamageData(adr_damage addressDamage,string title,string explanation, string status,string damage_id){
+    addressDamage = new damage;
+    addressDamage->title = title;
+    addressDamage->explanation = explanation;
+    addressDamage->status = status;
+    addressDamage->damage_id = damage_id;
+    addressDamage->next = nullptr;
+
+    return addressDamage;
+}
+
+void insertDamage(customerList &customerList,string customer_id,string vehicle_id, adr_damage addressDamage){
+    adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
+    if (addressCustomer == nullptr) {
+        cout << "There is no such customer with this ID" << endl;
+        return;
+    }
+
+    adr_vehicle addressVehicle = findVehicleAddress(addressCustomer, vehicle_id);
+    addressVehicle->status = IN_PROGRESS;
+    adr_damage addressDamage2 = addressVehicle->damage;
+    if (addressDamage2 == nullptr) {
+        addressVehicle->damage = addressDamage;
+        return;
+    }
+
+    while (addressDamage2->next != nullptr) {
+        addressDamage2 = addressDamage2->next;
+    }
+    addressDamage2->next = addressDamage;
+}
+
+adr_damage findDamageAddress(adr_vehicle addressVehicle, string damage_id) {
+    adr_damage addressDamage = addressVehicle->damage;
+    while (addressDamage != nullptr) {
+        if (addressDamage->damage_id == damage_id) {
+            return addressDamage;
+        }
+        addressDamage = addressDamage->next;
+    }
+    cout << "There is no such Damage with this ID" << endl;
+    return nullptr;
+}
 
 void deleteDamage(adr_vehicle &vehicle, string idToDelete) {
     if(vehicle->damage != nullptr) {
@@ -224,9 +264,7 @@ void deleteVehicle(adr_customer &customer, string idToDelete) {
         }
         else {
             vehicleToDelete = customer->vehicle;
-        //vehicle->damage to customer->vehicle
-             customer->vehicle = vehicleToDelete->next;
-        //vehicle->damage to customer->vehicle
+            customer->vehicle = vehicleToDelete->next;
             vehicleToDelete->next = nullptr;
         }
         deleteAllDamage(vehicleToDelete);
@@ -240,63 +278,18 @@ void deleteAllVehicle(adr_customer &customer) {
     }
 }
 
-void deleteCustomer(customerList &customerList, string idToDelete) {
-    if(customerList.first != nullptr) {
-        adr_customer customerToDelete;
-        if(customerList.first->customer_id != idToDelete) {
-            adr_customer i = customerList.first;
-            while(i->next->customer_id != idToDelete) {
-                i = i->next;
+bool checkAllDamageStatus(adr_vehicle vehicle) {
+    adr_damage addressDamage = vehicle->damage;
+    if (addressDamage != nullptr) {
+        while (addressDamage != nullptr) {
+            if (addressDamage->status != DONE) {
+                return false;
             }
-            customerToDelete = i->next;
-            i->next = customerToDelete->next;
-            customerToDelete->next = nullptr;
+            addressDamage = addressDamage->next;
         }
-        else {
-            customerToDelete = customerList.first;
-            //vehicle->damage to customer->vehicle
-            customerList.first = customerToDelete->next;
-            //vehicle->damage to customer->vehicle
-            customerToDelete->next = nullptr;
-        }
-        deleteAllVehicle(customerToDelete);
-        delete customerToDelete;
+        return true;
     }
-}
-
-adr_damage CreateElementDamageData(adr_damage addressDamage,string title,string explanation, string status,string damage_id){
-    addressDamage = new damage;
-    addressDamage->title = title;
-    addressDamage->explanation = explanation;
-    addressDamage->status = status;
-    addressDamage->damage_id = damage_id;
-    addressDamage->next = nullptr;
-
-    return addressDamage;
-}
-
-void insertDamage(customerList &customerList,string customer_id,string vehicle_id, adr_damage addressDamage){
-    adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
-    if (addressCustomer == nullptr) {
-        cout << "There is no such customer with this ID" << endl;
-        return;
-    }
-
-    adr_vehicle addressVehicle = findVehicleAddress(addressCustomer, vehicle_id);
-    addressCustomer->status = IN_PROGRESS;
-    addressVehicle->status = IN_PROGRESS;
-
-
-    adr_damage addressDamage2 = addressVehicle->damage;
-    if (addressDamage2 == nullptr) {
-        addressVehicle->damage = addressDamage;
-        return;
-    }
-
-    while (addressDamage2->next != nullptr) {
-        addressDamage2 = addressDamage2->next;
-    }
-    addressDamage2->next = addressDamage;
+    return false;
 }
 
 void printDataDamage(customerList customerList, string customer_id, string vehicle_id){
@@ -319,4 +312,12 @@ void printDataDamage(customerList customerList, string customer_id, string vehic
         addressDamage = addressDamage->next;
         DamageCount++;
     }
+}
+
+void updateDamageStatus(adr_damage &damage, string damageStatus) {
+    damage->status = damageStatus;
+}
+
+void printEasterEgg(){
+    cout << NO_BITCHES << endl;
 }

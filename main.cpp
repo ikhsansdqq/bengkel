@@ -30,12 +30,10 @@ int main() {
 
     cout << "Testing by input 2 vehicle data and update customer status" << endl;
     cout << "==========" << endl;
-    addressVehicle = CreateElementVehicleData(addressVehicle, "Toyota", "TS-98", "SUV", "Land Cruiser", "In Progress",
-                                              1998);
+    addressVehicle = CreateElementVehicleData(addressVehicle, "Toyota", "TS-98", "SUV", "Land Cruiser", 1998);
     insertLastVehicle(customerList, "FRM001", addressVehicle);
-    addressVehicle = CreateElementVehicleData(addressVehicle, "Ford", "FT-80", "Truck", "F150", "DONE", 1980);
+    addressVehicle = CreateElementVehicleData(addressVehicle, "Ford", "FT-80", "Truck", "F150", 1980);
     insertLastVehicle(customerList, "ARP001", addressVehicle);
-
     updateAllCustomer(customerList);
     printAllDataCustomer(customerList);
     cout << endl;
@@ -43,28 +41,47 @@ int main() {
     printDataVehicle(customerList, "ARP001");
     cout << endl;
 
-    cout
-            << "Testing changing vehicle status from InProgress to DONE and see if its updated on the customer side (Fauzan Data will be used for testing)"
-            << endl;
+    cout << "Testing by input 2 vehicle data and update customer status and vehicle status" << endl;
     cout << "==========" << endl;
-    customerID = "FRM001";
-    vehicleID = "TS-98";
-    vehicleStatus = "DONE";
-    cout << "Which customer need to be updated ? (Type the ID) " << customerID << endl;
-    cout << "Which vehicle status need to be updated (Type the ID) " << vehicleID << endl;
-    cout << "What status ? (DONE or InProgress only) " << vehicleStatus << endl;
-    cout << endl;
-    addressCustomer = findCustomerAddress(customerList, customerID);
-    addressVehicle = findVehicleAddress(addressCustomer, vehicleID);
-    updateVehicleStatusTemporary(addressVehicle, vehicleStatus);
+    addressDamage = CreateElementDamageData(addressDamage, "Mesin", "Salah masukin oli", IN_PROGRESS, "ABC");
+    insertDamage(customerList, "FRM001", "TS-98",addressDamage);
+    addressDamage = CreateElementDamageData(addressDamage, "Body", "Lecet", IN_PROGRESS , "DEF");
+    insertDamage(customerList, "ARP001", "FT-80",addressDamage);
     updateAllCustomer(customerList);
     printAllDataCustomer(customerList);
-    printDataVehicle(customerList, "FRM001");
     cout << endl;
+    printDataVehicle(customerList, "ARP001");
+    cout << endl;
+    printDataDamage(customerList, "ARP001", "FT-80");
+
     cout << endl;
 
-    /*
-    cout << "Delete vechicle to customer side (Fauzan Vechiler)" << endl;
+    cout << "========= Damage Status on Vehicle Test in for ARP001 =========" << endl;
+    cout << "Before Updating" << endl;
+    printDataVehicle(customerList, "ARP001");
+    cout << "After Updating" << endl;
+    addressCustomer = findCustomerAddress(customerList, "ARP001");
+    addressVehicle = findVehicleAddress(addressCustomer,"FT-80");
+    addressDamage = findDamageAddress(addressVehicle,"DEF");
+    updateDamageStatus(addressDamage,DONE);
+    printDataDamage(customerList, "ARP001", "FT-80");
+    updateVehicleStatus(addressVehicle);
+    printDataVehicle(customerList,"ARP001");
+
+    addressDamage = findDamageAddress(addressVehicle,"DEF");
+    cout << "Delete damage to customer side (Alam)" << endl;
+    cout << "==========" << endl;
+    cout << "Before Delete" << endl;
+    printDataDamage(customerList, "ARP001", "FT-80");
+
+    cout << "After Delete" << endl;
+    addressCustomer = findCustomerAddress(customerList,  "ARP001");
+    addressVehicle = findVehicleAddress(addressCustomer,"FT-80");
+    deleteDamage(addressVehicle, "DEF");
+    printDataDamage(customerList, "ARP001", "FT-80");
+    
+    cout << endl;
+    cout << "Delete vehicle to customer side (Fauzan Vehicle)" << endl;
     cout << "==========" << endl;
 
     cout << "Before Delete" << endl;
@@ -78,7 +95,6 @@ int main() {
     cout << endl;
     cout << endl;
 
-
     cout << "Delete all vechicle" << endl;
     cout << "==========" << endl;
 
@@ -89,56 +105,19 @@ int main() {
     addressCustomer = findCustomerAddress(customerList,  "ARP001");
     deleteAllVehicle(addressCustomer);
     printDataVehicle(customerList, "ARP001");
-
     cout << endl;
     cout << endl;
-
-
     cout << "Delete customer to customer side (Fauzan Vechile)" << endl;
     cout << "==========" << endl;
 
     cout << "Before Delete" << endl;
     printAllDataCustomer(customerList);
 
+    cout << endl; 
     cout << "After Delete" << endl;
     deleteCustomer(customerList, "FRM001");
     printAllDataCustomer(customerList);
 
-
     cout << endl;
-    cout << endl;
-    cout << "==========" << endl;
-    */
-
-    cout << "Testing by input 2 vehicle data and update customer status and vehicle status" << endl;
-    cout << "==========" << endl;
-    addressDamage = CreateElementDamageData(addressDamage, "Mesin", "Salah masukin oli", "In Progress", "ABC");
-    insertDamage(customerList, "FRM001", "TS-98",addressDamage);
-    addressDamage = CreateElementDamageData(addressDamage, "Body", "Lecet", "Done", "DEF");
-    insertDamage(customerList, "ARP001", "FT-80",addressDamage);
-
-    updateAllCustomer(customerList);
-    printAllDataCustomer(customerList);
-    cout << endl;
-    printDataVehicle(customerList, "FRM001");
-    printDataVehicle(customerList, "ARP001");
-    cout << endl;
-    printDataDamage(customerList, "FRM001", "TS-98");
-    printDataDamage(customerList, "ARP001", "FT-80");
-
-    cout << "Delete damage to customer side (Alam)" << endl;
-    cout << "==========" << endl;
-
-    cout << "Before Delete" << endl;
-    printDataDamage(customerList, "ARP001", "FT-80");
-
-    cout << "After Delete" << endl;
-    addressCustomer = findCustomerAddress(customerList,  "ARP001");
-    addressVehicle = findVehicleAddress(addressCustomer,"FT-80");
-    deleteDamage(addressVehicle, "DEF");
-    printDataDamage(customerList, "ARP001", "FT-80");
-
-    cout << endl;
-
     return 0;
 }
