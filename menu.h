@@ -76,6 +76,9 @@ void insertDamage(customerList &customerList,string customer_id,string vehicle_i
 void printDataDamage(customerList customerList, string customer_id, string vehicle_id);
 void updateDamageStatus(adr_damage &damage, string damageStatus);
 bool checkAllDamageStatus(adr_vehicle vehicle);
+void printDataCustomer(customerList customerList,string customerID);
+int selectMenu();
+void printPerDataVehicle(adr_vehicle addressVehicle);
 
 
 #endif //MENU_H_INCLUDED

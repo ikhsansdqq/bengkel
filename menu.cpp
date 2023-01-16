@@ -53,6 +53,13 @@ void printAllDataCustomer(customerList customerList) {
     }
 }
 
+void printDataCustomer(customerList customerList,string customerID) {
+    adr_customer addressCustomer = findCustomerAddress(customerList,customerID);
+    cout << "Customer Name    :   " << addressCustomer->name << endl;
+    cout << "Customer ID      :   " << addressCustomer->customer_id << endl;
+    cout << "Customer Status  :   " << addressCustomer->status << endl;
+}
+
 void updateCustomerStatus(adr_customer &customer) {
     if (checkAllVehicleStatus(customer)) {
         customer->status = DONE;
@@ -171,6 +178,21 @@ void printDataVehicle(customerList customerList, string customer_id) {
         addressVehicle = addressVehicle->next;
         vehicleCount++;
     }
+}
+
+void printPerDataVehicle(adr_vehicle addressVehicle) {
+    cout << "====== Vehicle List ======" << endl;
+    if (addressVehicle == nullptr) {
+        cout << "There is no vehicle assigned to this customer" << endl;
+        return;
+    }
+    cout << "Brand        : " << addressVehicle->brand << endl;
+    cout << "ID           : " << addressVehicle->vehicle_id << endl;
+    cout << "Type         : " << addressVehicle->car_type << endl;
+    cout << "Model        : " << addressVehicle->model << endl;
+    cout << "Year         : " << addressVehicle->year << endl;
+    cout << "Status       : " << addressVehicle->status << endl;
+    cout << endl;
 }
 
 void updateVehicleStatus(adr_vehicle &vehicle) {
@@ -320,4 +342,30 @@ void updateDamageStatus(adr_damage &damage, string damageStatus) {
 
 void printEasterEgg(){
     cout << NO_BITCHES << endl;
+}
+
+int selectMenu(){
+
+    cout<<"====== MENU ======"<<endl;
+    cout<<"1. Add Customer"<<endl;
+    cout<<"2. Add Vehicle"<<endl;
+    cout<<"3. Add Damage"<<endl;
+    cout<<"4. Show all data"<<endl;
+    cout<<"5. Show All Customer"<<endl;
+    cout<<"6. Show All Vehicle (1 Customer)"<<endl;
+    cout<<"7. Show All Damage (1 Vehicle)"<<endl;
+    cout<<"8. Update damage (will update customer and vehicle too)"<<endl;
+    cout<<"9. Delete Customer"<<endl;
+    cout<<"10. Delete All Vehicle"<<endl;
+    cout<<"11. Delete All Damage"<<endl;
+    cout<<"12. Delete Certain Vehicle"<<endl;
+    cout<<"13. Delete Certain Damage"<<endl;
+    cout<<"14. Update Data (Just in Case something broken)"<<endl;
+    cout<<"15. Testing"<<endl;
+    cout<<"0. Exit"<<endl;
+    cout<<"Input menu: ";
+    int input = 0;
+    cin >>input;
+    return input;
+
 }
