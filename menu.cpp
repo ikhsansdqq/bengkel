@@ -345,7 +345,6 @@ void printEasterEgg(){
 }
 
 int selectMenu(){
-
     cout<<"====== MENU ======"<<endl;
     cout<<"1. Add Customer"<<endl;
     cout<<"2. Add Vehicle"<<endl;
