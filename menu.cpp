@@ -55,6 +55,9 @@ void printAllDataCustomer(customerList customerList) {
 
 void printDataCustomer(customerList customerList,string customerID) {
     adr_customer addressCustomer = findCustomerAddress(customerList,customerID);
+    if(addressCustomer == nullptr) {
+        return;
+    }
     cout << "Customer Name    :   " << addressCustomer->name << endl;
     cout << "Customer ID      :   " << addressCustomer->customer_id << endl;
     cout << "Customer Status  :   " << addressCustomer->status << endl;
@@ -114,7 +117,6 @@ adr_vehicle CreateElementVehicleData(adr_vehicle addressVehicle, string brand, s
 void insertLastVehicle(customerList &customerList, string customer_id, adr_vehicle addressVehicle) {
     adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
     if (addressCustomer == nullptr) {
-        cout << "There is no such customer with this ID" << endl;
         return;
     }
     addressCustomer->status = IN_PROGRESS;
@@ -159,6 +161,9 @@ bool checkAllVehicleStatus(adr_customer customer) {
 
 void printDataVehicle(customerList customerList, string customer_id) {
     adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
+    if(addressCustomer == nullptr) {
+        return;
+    }
     adr_vehicle addressVehicle = addressCustomer->vehicle;
     int vehicleCount = 1;
     cout << "====== Vehicle List " << addressCustomer->name << " ======" << endl;
@@ -215,11 +220,13 @@ adr_damage CreateElementDamageData(adr_damage addressDamage,string title,string 
 void insertDamage(customerList &customerList,string customer_id,string vehicle_id, adr_damage addressDamage){
     adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
     if (addressCustomer == nullptr) {
-        cout << "There is no such customer with this ID" << endl;
         return;
     }
 
     adr_vehicle addressVehicle = findVehicleAddress(addressCustomer, vehicle_id);
+    if(addressVehicle == nullptr) {
+        return;
+    }
     addressVehicle->status = IN_PROGRESS;
     adr_damage addressDamage2 = addressVehicle->damage;
     if (addressDamage2 == nullptr) {
@@ -316,7 +323,13 @@ bool checkAllDamageStatus(adr_vehicle vehicle) {
 
 void printDataDamage(customerList customerList, string customer_id, string vehicle_id){
     adr_customer addressCustomer = findCustomerAddress(customerList, customer_id);
+    if(addressCustomer == nullptr) {
+        return;
+    }
     adr_vehicle addressVehicle = findVehicleAddress(addressCustomer, vehicle_id);
+    if(addressVehicle == nullptr) {
+        return;
+    }
     adr_damage addressDamage = addressVehicle->damage;
     int DamageCount = 1;
     cout << "====== Damage List for " << addressCustomer->name << " with vehicle id number : "<< addressVehicle->vehicle_id <<" ======" << endl;

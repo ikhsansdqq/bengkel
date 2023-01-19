@@ -76,7 +76,7 @@ int main() {
             case 5:
                 printAllDataCustomer(customerList);
                 break;
-            case 6: 
+            case 6:
                 cout << "========== PRINT VEHICLE =========" << endl;
                 cout << "Input CustomerID    :";
                 cin >> customerID;
@@ -112,6 +112,9 @@ int main() {
                 cout << "Input Customer ID    : ";
                 cin >> customerID;
                 addressCustomer = findCustomerAddress(customerList, customerID);
+                if(addressCustomer == nullptr) {
+                    break;
+                }
                 deleteCustomer(customerList, customerID);
                 updateAllCustomer(customerList);
                 break;
@@ -119,15 +122,27 @@ int main() {
                 cout << "=== DELETE ALL VEHICLES ===" << endl;
                 cout << "Search Customer ID    : ";
                 cin >> customerID;
-                addressVehicle = findVehicleAddress(addressCustomer, vehicleID);
+                addressCustomer = findCustomerAddress(customerList, customerID);
+                if(addressCustomer == nullptr) {
+                    break;
+                }
                 deleteAllVehicle(addressCustomer);
                 updateAllCustomer(customerList);
-                // Masih Perbaikan
                 break;
             case 11:
                 cout << "=== DELETE ALL DAMAGES ===" << endl;
                 cout << "Input Customer ID    : ";
                 cin >> customerID;
+                cout << "Search for Vehicle ID: ";
+                cin >> vehicleID;
+                addressCustomer = findCustomerAddress(customerList, customerID);
+                if(addressCustomer == nullptr) {
+                    break;
+                }
+                addressVehicle = findVehicleAddress(addressCustomer, vehicleID);
+                if(addressVehicle == nullptr) {
+                    break;
+                }
                 deleteAllDamage(addressVehicle);
                 updateAllCustomer(customerList);
                 updateDamageStatus(addressDamage, damageStat);
@@ -135,18 +150,35 @@ int main() {
                 break;
             case 12:
                 cout << "==== DELETE CERTAIN VEHICLE ====" << endl;
+                cout << "Search for Customer ID: ";
+                cin >> customerID;
                 cout << "Search for Vehicle ID: ";
                 cin >> vehicleID;
-                findVehicleAddress(addressCustomer, vehicleID);
+                addressCustomer = findCustomerAddress(customerList, customerID);
+                if(addressCustomer == nullptr) {
+                    break;
+                }
                 deleteVehicle(addressCustomer, vehicleID);
                 updateAllCustomer(customerList);
                 break;
             case 13:
                 cout << "=== DELETE CERTAIN DAMAGES ===" << endl;
+                cout << "Search for Customer ID: ";
+                cin >> customerID;
+                cout << "Search for Vehicle ID: ";
+                cin >> vehicleID;
                 cout << "Search for Damages ID: ";
                 cin >> damageID;
-                findDamageAddress(addressVehicle, damageID);
+                addressCustomer = findCustomerAddress(customerList, customerID);
+                if(addressCustomer == nullptr) {
+                    break;
+                }
+                addressVehicle = findVehicleAddress(addressCustomer, vehicleID);
+                if(addressVehicle == nullptr) {
+                    break;
+                }
                 deleteDamage(addressVehicle, damageID);
+                updateAllCustomer(customerList);
                 break;
             case 14:
                 cout << "==== UPDATE DATA ====" << endl;
@@ -157,6 +189,7 @@ int main() {
         }
         cout << "Back to main menu? (Y/N) : ";
         cin >> recalled;
+        cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
         if (recalled == "Y" || recalled == "y") {
             pilihan = selectMenu();
         } else {
