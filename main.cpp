@@ -130,6 +130,7 @@ int main() {
                 cout << "==== DELETE CERTAIN VEHICLE ====" << endl;
                 cout << "Search for Vehicle ID: ";
                 cin >> vehicleID;
+                findVehicleAddress(addressCustomer, vehicleID);
                 deleteVehicle(addressCustomer, vehicleID);
                 updateAllCustomer(customerList);
                 break;
@@ -137,10 +138,12 @@ int main() {
                 cout << "=== DELETE CERTAIN DAMAGES ===" << endl;
                 cout << "Search for Damages ID: ";
                 cin >> damageID;
+                findDamageAddress(addressVehicle, damageID);
                 deleteDamage(addressVehicle, damageID);
                 break;
             case 14:
                 cout << "==== UPDATE DATA ====" << endl;
+                // UPDATING DATA
                 break;
             case 15:
                 cout << "======= THIS IS JUST A PROCEDURE AND FUNCTION TEST =======" << endl;
