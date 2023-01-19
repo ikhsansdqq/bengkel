@@ -35,8 +35,7 @@ int main() {
                 cin >> vehicleyear;
                 cout << "Input Customer ID   : ";
                 cin >> customerID;
-                addressVehicle = CreateElementVehicleData(addressVehicle, vehicleBrand, vehicleID, vehicleType,
-                                                          vehicleModel, vehicleyear);
+                addressVehicle = CreateElementVehicleData(addressVehicle, vehicleBrand, vehicleID, vehicleType,vehicleModel, vehicleyear);
                 insertLastVehicle(customerList, customerID, addressVehicle);
                 break;
             case 3:
