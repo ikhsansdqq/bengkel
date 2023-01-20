@@ -353,10 +353,6 @@ void updateDamageStatus(adr_damage &damage, string damageStatus) {
     damage->status = damageStatus;
 }
 
-void printEasterEgg(){
-    cout << NO_BITCHES << endl;
-}
-
 int selectMenu(){
     cout<<"====== MENU ======"<<endl;
     cout<<"1. Add Customer"<<endl;

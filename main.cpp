@@ -5,38 +5,49 @@ int main() {
     adr_customer addressCustomer = nullptr;
     adr_vehicle addressVehicle = nullptr;
     adr_damage addressDamage = nullptr;
-    int pilihan, vehicleyear;
+    int pilihan, vehicleyear, howMany;
     string recalled, customerName, customerID, vehicleBrand, vehicleID, vehicleType, vehicleModel, vehicleStatus, damageTitle, damageExp, damageStat, damageID, yesNo;
     createListCustomer(customerList);
     pilihan = selectMenu();
     while (pilihan != 0) {
         switch (pilihan) {
+            default:
+                break;
             case 1:
                 cout << "===== INPUT CUSTOMER =====" << endl;
-                cout << "Input Customer name     : ";
-                cin.ignore();
-                getline(cin,customerName,'\n');
-                cout << "Input Customer ID       : ";
-                cin >> customerID;
-                addressCustomer = CreateElementCustomerData(addressCustomer, customerName, customerID);
-                insertLastCustomer(customerList, addressCustomer);
+                cout << "How many Customer : ";
+                cin >> howMany;
+                for (int i = 0; i < howMany; ++i) {
+                    cout << "Input Customer name     : ";
+                    cin.ignore();
+                    getline(cin, customerName, '\n');
+                    cout << "Input Customer ID       : ";
+                    cin >> customerID;
+                    addressCustomer = CreateElementCustomerData(addressCustomer, customerName, customerID);
+                    insertLastCustomer(customerList, addressCustomer);
+                }
                 break;
             case 2:
                 cout << "===== INPUT VEHICLE =====" << endl;
-                cout << "Input Vehicle Brand : ";
-                cin >> vehicleBrand;
-                cout << "Input Vehicle ID    : ";
-                cin >> vehicleID;
-                cout << "Input Vehicle Type  : ";
-                cin >> vehicleType;
-                cout << "Input Vehicle Model : ";
-                cin >> vehicleModel;
-                cout << "Input Vehicle Year  : ";
-                cin >> vehicleyear;
-                cout << "Input Customer ID   : ";
-                cin >> customerID;
-                addressVehicle = CreateElementVehicleData(addressVehicle, vehicleBrand, vehicleID, vehicleType,vehicleModel, vehicleyear);
-                insertLastVehicle(customerList, customerID, addressVehicle);
+                cout << "How many Vehicle : ";
+                cin >> howMany;
+                for (int i = 0; i < howMany; ++i) {
+                    cout << "Input Vehicle Brand : ";
+                    cin >> vehicleBrand;
+                    cout << "Input Vehicle ID    : ";
+                    cin >> vehicleID;
+                    cout << "Input Vehicle Type  : ";
+                    cin >> vehicleType;
+                    cout << "Input Vehicle Model : ";
+                    cin >> vehicleModel;
+                    cout << "Input Vehicle Year  : ";
+                    cin >> vehicleyear;
+                    cout << "Input Customer ID   : ";
+                    cin >> customerID;
+                    addressVehicle = CreateElementVehicleData(addressVehicle, vehicleBrand, vehicleID, vehicleType,
+                                                              vehicleModel, vehicleyear);
+                    insertLastVehicle(customerList, customerID, addressVehicle);
+                }
                 break;
             case 3:
                 cout << "===== INPUT DAMAGE =====" << endl;
@@ -46,10 +57,10 @@ int main() {
                 cin >> vehicleID;
                 cout << "Input Damage Title : ";
                 cin.ignore();
-                getline(cin, damageTitle,'\n');
+                getline(cin, damageTitle, '\n');
                 cout << "Input Damage Explanation  : ";
                 cin.ignore();
-                getline(cin,damageExp,'\n');
+                getline(cin, damageExp, '\n');
                 cout << "Input Damage ID    : ";
                 cin >> damageID;
                 damageStat = IN_PROGRESS;
@@ -112,18 +123,25 @@ int main() {
                 cout << "Input Customer ID    : ";
                 cin >> customerID;
                 addressCustomer = findCustomerAddress(customerList, customerID);
-                if(addressCustomer == nullptr) {
+//                if (addressCustomer == nullptr) {
+//                    break;
+//                }
+                if (addressCustomer != nullptr) {
+                    deleteCustomer(customerList, customerID);
+                    updateAllCustomer(customerList);
+                } else {
+                    cout << "Customer is not found" << endl;
                     break;
                 }
-                deleteCustomer(customerList, customerID);
-                updateAllCustomer(customerList);
+//                deleteCustomer(customerList, customerID);
+//                updateAllCustomer(customerList);
                 break;
             case 10:
                 cout << "=== DELETE ALL VEHICLES ===" << endl;
                 cout << "Search Customer ID    : ";
                 cin >> customerID;
                 addressCustomer = findCustomerAddress(customerList, customerID);
-                if(addressCustomer == nullptr) {
+                if (addressCustomer == nullptr) {
                     break;
                 }
                 deleteAllVehicle(addressCustomer);
@@ -136,11 +154,11 @@ int main() {
                 cout << "Search for Vehicle ID: ";
                 cin >> vehicleID;
                 addressCustomer = findCustomerAddress(customerList, customerID);
-                if(addressCustomer == nullptr) {
+                if (addressCustomer == nullptr) {
                     break;
                 }
                 addressVehicle = findVehicleAddress(addressCustomer, vehicleID);
-                if(addressVehicle == nullptr) {
+                if (addressVehicle == nullptr) {
                     break;
                 }
                 deleteAllDamage(addressVehicle);
@@ -155,11 +173,17 @@ int main() {
                 cout << "Search for Vehicle ID: ";
                 cin >> vehicleID;
                 addressCustomer = findCustomerAddress(customerList, customerID);
-                if(addressCustomer == nullptr) {
+//                if (addressCustomer == nullptr) {
+//                    break;
+//                }
+                if (addressCustomer != nullptr) {
+                    deleteVehicle(addressCustomer, vehicleID);
+//                updateAllCustomer(customerList);
+                } else {
                     break;
                 }
-                deleteVehicle(addressCustomer, vehicleID);
-                updateAllCustomer(customerList);
+//                deleteVehicle(addressCustomer, vehicleID);
+//                updateAllCustomer(customerList);
                 break;
             case 13:
                 cout << "=== DELETE CERTAIN DAMAGES ===" << endl;
@@ -170,11 +194,11 @@ int main() {
                 cout << "Search for Damages ID: ";
                 cin >> damageID;
                 addressCustomer = findCustomerAddress(customerList, customerID);
-                if(addressCustomer == nullptr) {
+                if (addressCustomer == nullptr) {
                     break;
                 }
                 addressVehicle = findVehicleAddress(addressCustomer, vehicleID);
-                if(addressVehicle == nullptr) {
+                if (addressVehicle == nullptr) {
                     break;
                 }
                 deleteDamage(addressVehicle, damageID);
@@ -182,9 +206,13 @@ int main() {
                 break;
             case 14:
                 cout << "==== UPDATE DATA ====" << endl;
-                updateAllCustomer(customerList);
+                if (customerList.first != nullptr) {
+                    updateAllCustomer(customerList);
+                    cout << "Update Data Success!" << endl;
+                } else {
+                    cout << "Data is empty" << endl;
+                }
                 cout << "==== DONE ====" << endl;
-                // UPDATING DATA
                 break;
         }
         cout << "Back to main menu? (Y/N) : ";
